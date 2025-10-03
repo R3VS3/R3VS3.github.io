@@ -2,105 +2,271 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Professional Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeraNusa | Crypto Solution for Land Certificate Fraud</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #2c5364);
+            color: #fff;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5vw 1rem 5vw;
+            background: rgba(15,32,39,0.95);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #00e6d0;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.2s;
+    }
+    nav a:hover {
+            color: #00e6d0;
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+            padding: 3rem 2vw;
+        }
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #00e6d0;
+        }
+        .hero-desc {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+        }
+        .cta-btn {
+            background: #00e6d0;
+            color: #0f2027;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,230,208,0.15);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: #fff;
+            color: #00e6d0;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 4rem 0 2rem 0;
+        }
+        .feature-card {
+            background: rgba(44,83,100,0.95);
+            border-radius: 18px;
+            padding: 2rem 1.5rem;
+            max-width: 320px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            text-align: left;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 8px 32px rgba(0,230,208,0.10);
+        }
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00e6d0;
+            margin-bottom: 0.5rem;
+        }
+        .feature-desc {
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+        .team-section {
+            background: rgba(15,32,39,0.97);
+            padding: 3rem 0 2rem 0;
+            text-align: center;
+        }
+        .team-title {
+            font-size: 2rem;
+            color: #00e6d0;
+            margin-bottom: 1.5rem;
+        }
+        .team-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .team-member {
+            background: rgba(44,83,100,0.95);
+            border-radius: 14px;
+            padding: 1.5rem 1rem;
+            min-width: 180px;
+            max-width: 220px;
+            color: #fff;
+        }
+        .team-member .name {
+            font-weight: 700;
+            color: #00e6d0;
+            margin-bottom: 0.3rem;
+        }
+        .team-member .role {
+            font-size: 0.95rem;
+            color: #e0e0e0;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 0 1rem 0;
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            background: rgba(15,32,39,0.97);
+        }
+        @media (max-width: 800px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            .team-list {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+        <script>
+        // Smooth scroll for nav links
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('nav a').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            window.scrollTo({
+                                top: target.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            // Button feedback
+            document.querySelectorAll('.cta-btn').forEach(function(btn) {
+                btn.addEventListener('mousedown', function() {
+                    btn.style.transform = 'scale(0.97)';
+                });
+                btn.addEventListener('mouseup', function() {
+                    btn.style.transform = '';
+                });
+                btn.addEventListener('mouseleave', function() {
+                    btn.style.transform = '';
+                });
+            });
+            // Prevent form submit (demo)
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for contacting TeraNusa! We will get back to you soon.');
+                    form.reset();
+                });
+            }
+        });
+        </script>
+    </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Your Names</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <header class="bg-primary text-white text-center py-5">
-        <div class="container">
-            <h1 class="display-4">Hello, I'm Your Name</h1>
-            <p class="lead">Web Developer | Designer | Programmer</p>
-        </div>
+    <header>
+        <div class="logo">TeraNusa</div>
+        <nav>
+            <a href="#features">Features</a>
+            <a href="#team">Team</a>
+            <a href="#contact">Contact</a>
+        </nav>
     </header>
-
-    <section id="about" class="py-5">
-        <div class="container">
-            <h2>About Me</h2>
-            <p>
-                I am a passionate web developer with experience in building responsive and professional websites using modern technologies. I enjoy solving problems and creating solutions that make a difference.
-            </p>
+    <section class="hero">
+        <div class="hero-title">Revolutionizing Land Certificate Security in Indonesia</div>
+        <div class="hero-desc">
+            TeraNusa leverages blockchain technology to eliminate land certificate fraud in Indonesia. Our secure, transparent, and decentralized platform ensures every land certificate is authentic, tamper-proof, and verifiable by anyone, anytime.
+        </div>
+        <a href="#contact" class="cta-btn">Get Early Access</a>
+    </section>
+    <section class="features" id="features">
+        <div class="feature-card">
+            <div class="feature-title">Blockchain Security</div>
+            <div class="feature-desc">All land certificates are stored on a decentralized blockchain, making them immutable and resistant to tampering or forgery.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-title">Instant Verification</div>
+            <div class="feature-desc">Verify the authenticity of any land certificate instantly, reducing bureaucracy and preventing fraud at every transaction.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-title">Transparency & Trust</div>
+            <div class="feature-desc">Our open ledger builds trust among landowners, buyers, and government agencies, ensuring transparent property transactions.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-title">User Privacy</div>
+            <div class="feature-desc">Sensitive data is encrypted and only accessible to authorized parties, protecting user privacy while maintaining transparency.</div>
         </div>
     </section>
-
-    <section id="projects" class="py-5 bg-light">
-        <div class="container">
-            <h2>Projects</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Project One</h5>
-                            <p class="card-text">A brief description of your project goes here.</p>
-                            <a href="#" class="btn btn-primary">View Project</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Project Two</h5>
-                            <p class="card-text">A brief description of your project goes here.</p>
-                            <a href="#" class="btn btn-primary">View Project</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Project Three</h5>
-                            <p class="card-text">A brief description of your project goes here.</p>
-                            <a href="#" class="btn btn-primary">View Project</a>
-                        </div>
-                    </div>
-                </div>
+    <section class="team-section" id="team">
+        <div class="team-title">Meet Our Team</div>
+        <div class="team-list">
+            <div class="team-member">
+                <div class="name">Andi Pratama</div>
+                <div class="role">Blockchain Lead</div>
+            </div>
+            <div class="team-member">
+                <div class="name">Siti Rahmawati</div>
+                <div class="role">Legal & Compliance</div>
+            </div>
+            <div class="team-member">
+                <div class="name">Budi Santoso</div>
+                <div class="role">Full Stack Developer</div>
+            </div>
+            <div class="team-member">
+                <div class="name">Dewi Lestari</div>
+                <div class="role">Community Outreach</div>
             </div>
         </div>
     </section>
-
-    <section id="contact" class="py-5">
-        <div class="container">
-            <h2>Contact</h2>
-            <form>
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" id="message" rows="4" placeholder="Your message"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
+    <section class="hero" id="contact" style="min-height:unset; padding-top:0;">
+        <div class="hero-title" style="font-size:2rem;">Contact Us</div>
+        <div class="hero-desc" style="margin-bottom:1rem;">
+            Interested in partnering, investing, or learning more? Reach out to our team and join the movement to secure Indonesia's land future.
         </div>
+        <form style="max-width:400px;margin:0 auto;display:flex;flex-direction:column;gap:1rem;">
+            <input type="text" placeholder="Your Name" required style="padding:0.8rem 1rem;border-radius:8px;border:none;font-size:1rem;">
+            <input type="email" placeholder="Your Email" required style="padding:0.8rem 1rem;border-radius:8px;border:none;font-size:1rem;">
+            <textarea placeholder="Your Message" required style="padding:0.8rem 1rem;border-radius:8px;border:none;font-size:1rem;min-height:80px;"></textarea>
+            <button type="submit" class="cta-btn" style="width:100%;">Send Message</button>
+        </form>
     </section>
-
-    <footer class="bg-dark text-white text-center py-3">
-        <div class="container">
-            &copy; 2024 Your Name. All rights reserved.
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <footer>
+        &copy; 2025 TeraNusa. All rights reserved. | Empowering Indonesia's land security with blockchain.
 </body>
+</html>
 </html>
