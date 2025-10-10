@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERANUSA - Blockchain Land Registry</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #16213e 70%, #0f3460 100%);
+            min-height: 100%;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100%;
+            position: relative;
+        }
+
+        /* Animated background elements */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.3), rgba(26, 26, 46, 0.5));
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            animation: scan 3s infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00d4ff, #ffd700, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .vision {
+            font-size: 1.6rem;
+            color: #00d4ff;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.4), rgba(26, 26, 46, 0.6));
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #ffd700, #00ff88);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .card p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .problem-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(245, 158, 11, 0.3));
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .stat-text {
+            font-size: 0.9rem;
+            color: #fbbf24;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .blockchain-visual {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1));
+            border-radius: 15px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .chain-link {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d4ff, #0ea5e9);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: pulse-glow 2s infinite;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+            }
+
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+            }
+        }
+
+        .arrow {
+            color: #00ff88;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.4), rgba(26, 26, 46, 0.6));
+            padding: 4rem 3rem;
+            border-radius: 25px;
+            text-align: center;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 2.2rem;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #00d4ff, #0ea5e9);
+            color: #0a0a0a;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin: 1rem 0.5rem;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 212, 255, 0.5);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .social-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature {
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.3), rgba(26, 26, 46, 0.5));
+            padding: 2rem;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+        }
+
+        .feature h4 {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-stats {
+                flex-direction: column;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .vision {
+                font-size: 1.3rem;
+            }
+
+            .blockchain-visual {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        .logo {
+            animation: glitch 4s infinite;
+        }
+
+        @keyframes glitch {
+
+            0%,
+            90%,
+            100% {
+                transform: translate(0);
+            }
+
+            91% {
+                transform: translate(-2px, -2px);
+            }
+
+            92% {
+                transform: translate(2px, 2px);
+            }
+
+            93% {
+                transform: translate(-2px, 2px);
+            }
+
+            94% {
+                transform: translate(2px, -2px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-animation">
+        <div class="floating-element">⛓</div>
+        <div class="floating-element">🏠</div>
+        <div class="floating-element">📋</div>
+    </div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo">TERANUSA</div>
+            <div class="vision">Building Trust on Every Land</div>
+            <div class="tagline">Transparent, Secure, and Decentralized</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Problem Card -->
+            <div class="card">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                        stroke="#ff4757" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <h3>SYSTEM ERROR</h3>
+                <p>Land disputes in Indonesia persist due to uncertified land ownership, fraudulent documents, and slow
+                    bureaucratic processes that undermine trust and security in the digital age.</p>
+
+                <div class="problem-stats">
+                    <div class="stat">
+                        <div class="stat-number">30%</div>
+                        <div class="stat-text">Land Uncertified</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">1000s</div>
+                        <div class="stat-text">Disputes Yearly</div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                        stroke="#00ff88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <h3>Our Project</h3>
+                <p>Blockchain technology for an immutable and transparent land registry, with automation through smart
+                    contracts. Visualize blockchain with icons like secure chains, land certificates, and transparent
+                    transactions.</p>
+
+                <div class="blockchain-visual">
+                    <div class="chain-link">🏠</div>
+                    <div class="arrow">→</div>
+                    <div class="chain-link">⛓</div>
+                    <div class="arrow">→</div>
+                    <div class="chain-link">📋</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h4>SECURE</h4>
+                <p>Military-grade encryption with immutable blockchain records that prevent fraud and tampering</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">👁</div>
+                <h4>TRANSPARENCY</h4>
+                <p>AI-powered public ledger ensures complete visibility and real-time accountability</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h4>DECENTRalized</h4>
+                <p>Next-gen smart contracts streamline processes and eliminate bureaucratic delays</p>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2>Join Us in Building a Transparent Future for Land Ownership</h2>
+            <p style="font-size: 1.2rem; color: #94a3b8; margin-bottom: 2rem;">Enter the revolution that's transforming
+                land registry management through cutting-edge blockchain innovation and decentralized protocols.</p>
+
+            <a href="#" class="cta-button"
+                onclick="alert('Welcome to the future! Visit our quantum-secured platform to learn more about TERANUSA.'); return false;">Pre-Order</a>
+
+            <div class="social-links">
+                <a href="https://www.instagram.com/tera.nusa/?igsh=cHh2a3ZhazJ0bXN5#" class="social-icon"
+                    onclick="alert('Connect with us on Instagram @teranusa_protocol'); return false;" title="Instagram">
+                    📷
+                </a>
+                <a href="https://trn-group.gitbook.io/trn-group-docs/" class="social-icon"
+                    onclick="alert('Access our encrypted Gitbook documentation'); return false;" title="Gitbook">
+                    📚
+                </a>
+                <a href="https://t.me/huhesz" class="social-icon"
+                    onclick="alert('Join our secure Telegram network'); return false;" title="Telegram">
+                    💬
+                </a>
+                <!-- <a href="#" class="social-icon" onclick="alert('Join our secure Telegram network'); return false;"
+                    title="Telegram">
+                    💬
+                </a> -->
+            </div>
+        </div>
+    </div>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'98c2e5e0112c7550',t:'MTc2MDA2NTU0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
